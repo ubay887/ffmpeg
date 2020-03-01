@@ -1,14 +1,15 @@
+from __future__ import absolute_import
+
 import ffmpeg
 import os
 import sys
 
-from . import utils
+from Utils import Utils
 
 PRE_FILE = "assets/MovieLife.mp4"
-INPUT_FOLDER = "input/"
+INPUT_FOLDER = "../input/"
 OVERLAY_FILE = ffmpeg.input('assets/overlay.png')
-
-INPUT_FILE_NAME = os.listdir(INPUT_FOLDER)[0]
+INPUT_FILE_NAME = INPUT_FOLDER + os.listdir(INPUT_FOLDER)[0]
 #  Put videos in input folder and get the result
 
 input_args = {
@@ -17,14 +18,24 @@ input_args = {
     "c:v": "h264_cuvid",
 }
 
+preFile_input_args = {
+    "hwaccel": "nvdec",
+    "vcodec": "h264_cuvid",
+    "c:v": "h264_cuvid",
+}
+
 if len(sys.argv) == 5:
     INPUT_FILE_NAME = sys.argv[1]
-    TRIM_START = sys.argv[1]
-    TRIM_END = sys.argv[2]
-    OVERLAY_CHANNEL = sys.argv[3]
+    TRIM_START = float(sys.argv[2])
+    TRIM_END = float(sys.argv[3])
+    OVERLAY_CHANNEL = sys.argv[4]
 
-    input_args["ss"] = utils.sToTimeFormat(TRIM_START, "%H:%M:%S.%f"),  # start "00:01:02.500"
-    input_args["t"] = utils.sToTimeFormat(TRIM_END - TRIM_START, "%H:%M:%S.%f")  # duration
+    input_args["ss"] = Utils.sToTimeFormat(TRIM_START, "%H:%M:%S.%f")  # start "00:01:02.500"
+    input_args["t"] = Utils.sToTimeFormat(TRIM_END - TRIM_START, "%H:%M:%S.%f")  # duration
+
+    if OVERLAY_CHANNEL == "NewOldMovies":
+        PRE_FILE = "assets/NewOldMovies"
+        OVERLAY_FILE = ffmpeg.input("assets/overlayNewOldMovies.png")
 
 print(INPUT_FILE_NAME)
 
@@ -42,8 +53,8 @@ output_args = {
 }
 
 try:
-    preFileStream = ffmpeg.input(PRE_FILE, **input_args)
-    inputStream = ffmpeg.input(INPUT_FOLDER + INPUT_FILE_NAME, **input_args)
+    preFileStream = ffmpeg.input(PRE_FILE, **preFile_input_args)
+    inputStream = ffmpeg.input(INPUT_FILE_NAME, **input_args)
     a1 = preFileStream.audio
     a2 = inputStream.audio
 
@@ -55,7 +66,10 @@ try:
 
     stream = ffmpeg.concat(preFileStream, a1, inputStream, a2, v=1, a=1)
 
-    stream = ffmpeg.output(stream, INPUT_FILE_NAME, **output_args)
+    OUTPUT_PATH = "../output/" + INPUT_FILE_NAME
+    if not os.path.exists("../output/"):
+        os.makedirs("../output/")
+    stream = ffmpeg.output(stream, OUTPUT_PATH, **output_args)
     ffmpeg.run(stream)
     print(ffmpeg.compile(stream))
 except FileNotFoundError as e:

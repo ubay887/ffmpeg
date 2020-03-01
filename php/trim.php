@@ -389,11 +389,11 @@ define("INPUT_DIR", "../input");
 
 <script>
     function trim() {
-        var fileName = $('div.player').find('source').attr("src");
+        var fileAddress = $('div.player').find('source').attr("src");
         var trimStart = $('div.time-slider').slider("values", 0);
         var trimEnd = $('div.time-slider').slider("values", 1);
         var copyrightChannel = $('input[name=radio]:checked').val();
-        alert();
+        window.location.href="doTrim.php?fileAddress=" + fileAddress + "&trimStart=" + trimStart + "&trimEnd=" + trimEnd + "&copyrightChannel=" + copyrightChannel;
     }
 </script>
 <?php
