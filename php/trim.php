@@ -241,7 +241,7 @@ define("INPUT_DIR", "../input");
                 </thead>
                 <tbody>
                 <tr>
-                    <th>loadMediaSrc</th>
+                    <th>loadMediaSrc("/input")</th>
                     <td>
                         <select class="load-media">
                             <option data-src='[{"src": "http://corrupt-system.de/assets/media/sintel/sintel-trailer.m4v", "type": "video/mp4"}]'>

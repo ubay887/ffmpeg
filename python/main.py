@@ -9,7 +9,11 @@ from Utils import Utils
 PRE_FILE = "assets/MovieLife.mp4"
 INPUT_FOLDER = "../input/"
 OVERLAY_FILE = ffmpeg.input('assets/overlay.png')
-INPUT_FILE_NAME = INPUT_FOLDER + os.listdir(INPUT_FOLDER)[0]
+try:
+    INPUT_FILE_NAME = INPUT_FOLDER + os.listdir(INPUT_FOLDER)[0]
+except Exception:
+    print("/input is empty!")
+
 #  Put videos in input folder and get the result
 
 input_args = {
