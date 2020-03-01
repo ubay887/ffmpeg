@@ -2,6 +2,8 @@ import ffmpeg
 import os
 import sys
 
+from . import utils
+
 PRE_FILE = "assets/MovieLife.mp4"
 INPUT_FOLDER = "input/"
 OVERLAY_FILE = ffmpeg.input('assets/overlay.png')
@@ -9,22 +11,22 @@ OVERLAY_FILE = ffmpeg.input('assets/overlay.png')
 INPUT_FILE_NAME = os.listdir(INPUT_FOLDER)[0]
 #  Put videos in input folder and get the result
 
-if len(sys.argv) == 5:
-    INPUT_FILE_NAME = argv[1]
-    TRIM_START = argv[1]
-    TRIM_END = argv[2]
-    OVERLAY_CHANNEL = argv[3]
-
-
-print(INPUT_FILE_NAME)
-
 input_args = {
     "hwaccel": "nvdec",
     "vcodec": "h264_cuvid",
     "c:v": "h264_cuvid",
-    "ss": "00:01:02.500",  # start
-    "t": "00:01:02.500"  # end
 }
+
+if len(sys.argv) == 5:
+    INPUT_FILE_NAME = sys.argv[1]
+    TRIM_START = sys.argv[1]
+    TRIM_END = sys.argv[2]
+    OVERLAY_CHANNEL = sys.argv[3]
+
+    input_args["ss"] = utils.sToTimeFormat(TRIM_START, "%H:%M:%S.%f"),  # start "00:01:02.500"
+    input_args["t"] = utils.sToTimeFormat(TRIM_END - TRIM_START, "%H:%M:%S.%f")  # duration
+
+print(INPUT_FILE_NAME)
 
 output_args = {
     "vcodec": "hevc_nvenc",
