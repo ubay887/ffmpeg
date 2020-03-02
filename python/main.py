@@ -10,26 +10,30 @@ PRE_FILE = "assets/MovieLife.mp4"
 INPUT_FOLDER = "../input/"
 OVERLAY_FILE = ffmpeg.input('assets/overlay.png')
 try:
-    INPUT_FILE_NAME = INPUT_FOLDER + os.listdir(INPUT_FOLDER)[0]
+    INPUT_FILE_NAME = os.listdir(INPUT_FOLDER)[0]
+    INPUT_FILE_PATH = INPUT_FOLDER + INPUT_FILE_NAME
 except Exception:
     print("/input is empty!")
 
 #  Put videos in input folder and get the result
 
 input_args = {
-    "hwaccel": "nvdec",
-    "vcodec": "h264_cuvid",
-    "c:v": "h264_cuvid",
+    # "hwaccel": "nvdec",
+    # "vcodec": "h264_cuvid",
+    # "c:v": "h264_cuvid",
+    # "vcodec": "libx264"
 }
 
 preFile_input_args = {
-    "hwaccel": "nvdec",
-    "vcodec": "h264_cuvid",
-    "c:v": "h264_cuvid",
+    # "hwaccel": "nvdec",
+    # "vcodec": "h264_cuvid",
+    # "c:v": "h264_cuvid",
+    # "vcodec": "libx264"
 }
 
 if len(sys.argv) == 5:
-    INPUT_FILE_NAME = sys.argv[1]
+    INPUT_FILE_PATH = sys.argv[1]
+    INPUT_FILE_NAME = os.path.basename(INPUT_FILE_PATH)
     TRIM_START = float(sys.argv[2])
     TRIM_END = float(sys.argv[3])
     OVERLAY_CHANNEL = sys.argv[4]
@@ -38,13 +42,14 @@ if len(sys.argv) == 5:
     input_args["t"] = Utils.sToTimeFormat(TRIM_END - TRIM_START, "%H:%M:%S.%f")  # duration
 
     if OVERLAY_CHANNEL == "NewOldMovies":
-        PRE_FILE = "assets/NewOldMovies"
+        PRE_FILE = "assets/NewOldMovies.mp4"
         OVERLAY_FILE = ffmpeg.input("assets/overlayNewOldMovies.png")
 
 print(INPUT_FILE_NAME)
 
 output_args = {
-    "vcodec": "hevc_nvenc",
+    # "vcodec": "hevc_nvenc",
+    "vcodec": "libx265",
     "c:v": "libx265",
     "preset": "fast",  # ultrafast - superfast - veryfast - faster - fast - medium(default preset) - slow -
     # slower - veryslow - placebo
@@ -58,7 +63,7 @@ output_args = {
 
 try:
     preFileStream = ffmpeg.input(PRE_FILE, **preFile_input_args)
-    inputStream = ffmpeg.input(INPUT_FILE_NAME, **input_args)
+    inputStream = ffmpeg.input(INPUT_FILE_PATH, **input_args)
     a1 = preFileStream.audio
     a2 = inputStream.audio
 
