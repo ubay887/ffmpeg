@@ -377,6 +377,26 @@ define("INPUT_DIR", "../input");
                         </tr>
                     </table>
                 </div>
+                <div class="form-radio">
+                    <table width="100%">
+                        <tr>
+                            <td>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="libx" checked="checked" value="libx264"/><i class="helper"></i>libx264
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="libx" value="libx265"/><i class="helper"></i>libx265
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <div class="button-container">
                     <button type="button" class="button" onclick="trim()"><span>Trim</span></button>
                 </div>
@@ -393,7 +413,8 @@ define("INPUT_DIR", "../input");
         var trimStart = $('div.time-slider').slider("values", 0);
         var trimEnd = $('div.time-slider').slider("values", 1);
         var copyrightChannel = $('input[name=radio]:checked').val();
-        window.location.href="doTrim.php?fileAddress=" + fileAddress + "&trimStart=" + trimStart + "&trimEnd=" + trimEnd + "&copyrightChannel=" + copyrightChannel;
+        var libx = $('input[name=libx]:checked').val();
+        window.location.href="doTrim.php?fileAddress=" + fileAddress + "&trimStart=" + trimStart + "&trimEnd=" + trimEnd + "&copyrightChannel=" + copyrightChannel + "&libx=" + libx;
     }
 </script>
 <?php

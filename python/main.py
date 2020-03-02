@@ -31,12 +31,14 @@ preFile_input_args = {
     # "vcodec": "libx264"
 }
 
-if len(sys.argv) == 5:
+LIBX = "libx264"
+if len(sys.argv) == 6:
     INPUT_FILE_PATH = sys.argv[1]
     INPUT_FILE_NAME = os.path.basename(INPUT_FILE_PATH)
     TRIM_START = float(sys.argv[2])
     TRIM_END = float(sys.argv[3])
     OVERLAY_CHANNEL = sys.argv[4]
+    LIBX = sys.argv[5]
 
     input_args["ss"] = Utils.sToTimeFormat(TRIM_START, "%H:%M:%S.%f")  # start "00:01:02.500"
     input_args["t"] = Utils.sToTimeFormat(TRIM_END - TRIM_START, "%H:%M:%S.%f")  # duration
@@ -49,8 +51,8 @@ print(INPUT_FILE_NAME)
 
 output_args = {
     # "vcodec": "hevc_nvenc",
-    "vcodec": "libx265",
-    "c:v": "libx265",
+    "vcodec": LIBX,
+    "c:v": LIBX,
     "preset": "fast",  # ultrafast - superfast - veryfast - faster - fast - medium(default preset) - slow -
     # slower - veryslow - placebo
     "r": 24,
