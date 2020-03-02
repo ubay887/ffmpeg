@@ -4,10 +4,16 @@ $trimStart = $_GET['trimStart'];
 $trimEnd = $_GET['trimEnd'];
 $copyrightChannel = $_GET['copyrightChannel'];
 
-echo "python ../python/main.py $fileAddress $trimStart $trimEnd $copyrightChannel";
+echo "python main.py $fileAddress $trimStart $trimEnd $copyrightChannel -y <br>";
 
 
 //$cmd = "ping 127.0.0.1  > log.txt &"; //example command
-$cmd = "python ../python/main.py $fileAddress $trimStart $trimEnd $copyrightChannel  2> log.txt &"; //example command
+//$cmd = "python ../python/main.py $fileAddress $trimStart $trimEnd $copyrightChannel -y  2>log.txt &";
+$cmd = "python main.py $fileAddress $trimStart $trimEnd $copyrightChannel -y  2>&1";
 
-exec($cmd);
+echo "<br>";
+echo chdir("../python");
+echo "<br>";
+echo shell_exec("ls");
+echo "<br>";
+var_dump(shell_exec($cmd));

@@ -58,28 +58,29 @@ output_args = {
     "b:v": "800k",
     "ac": 1,  # Mono
     # "b:a": "128k",
-    "acodec": "aac"  # copy
+    "acodec": "aac",  # copy
 }
 
-try:
-    preFileStream = ffmpeg.input(PRE_FILE, **preFile_input_args)
-    inputStream = ffmpeg.input(INPUT_FILE_PATH, **input_args)
-    a1 = preFileStream.audio
-    a2 = inputStream.audio
+preFileStream = ffmpeg.input(PRE_FILE, **preFile_input_args)
+inputStream = ffmpeg.input(INPUT_FILE_PATH, **input_args)
+a1 = preFileStream.audio
+a2 = inputStream.audio
 
-    inputStream = ffmpeg.filter(inputStream, 'scale', size='1920x1080', force_original_aspect_ratio='decrease')
-    inputStream = ffmpeg.filter(inputStream, 'pad', '1920', '1080', '(ow-iw)/2', '(oh-ih)/2')
-    inputStream = ffmpeg.overlay(inputStream, OVERLAY_FILE)
-    inputStream = ffmpeg.filter(inputStream, "fade", type='in', start_time=0, duration=1)
-    # inputStream = ffmpeg.filter(inputStream, "fade", type='out', duration=1)
+inputStream = ffmpeg.filter(inputStream, 'scale', size='1920x1080', force_original_aspect_ratio='decrease')
+inputStream = ffmpeg.filter(inputStream, 'pad', '1920', '1080', '(ow-iw)/2', '(oh-ih)/2')
+inputStream = ffmpeg.overlay(inputStream, OVERLAY_FILE)
+inputStream = ffmpeg.filter(inputStream, "fade", type='in', start_time=0, duration=1)
+# inputStream = ffmpeg.filter(inputStream, "fade", type='out', duration=1)
 
-    stream = ffmpeg.concat(preFileStream, a1, inputStream, a2, v=1, a=1)
+stream = ffmpeg.concat(preFileStream, a1, inputStream, a2, v=1, a=1)
 
-    OUTPUT_PATH = "../output/" + INPUT_FILE_NAME
-    if not os.path.exists("../output/"):
-        os.makedirs("../output/")
-    stream = ffmpeg.output(stream, OUTPUT_PATH, **output_args)
-    ffmpeg.run(stream)
-    print(ffmpeg.compile(stream))
-except FileNotFoundError as e:
-    print(e.strerror)
+OUTPUT_PATH = "../output/" + INPUT_FILE_NAME
+if not os.path.exists("../output/"):
+    os.makedirs("../output/")
+# if os.path.exists(OUTPUT_PATH):
+#  os.remove(OUTPUT_PATH)
+
+stream = ffmpeg.output(stream, OUTPUT_PATH, **output_args)
+stream = ffmpeg.overwrite_output(stream)
+ffmpeg.run(stream)
+print(ffmpeg.compile(stream))
