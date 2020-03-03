@@ -76,7 +76,7 @@ inputStream = ffmpeg.filter(inputStream, "fade", type='in', start_time=0, durati
 
 stream = ffmpeg.concat(preFileStream, a1, inputStream, a2, v=1, a=1)
 
-OUTPUT_PATH = "../output/" + INPUT_FILE_NAME + "[" + Utils.sToTimeFormat(TRIM_START, "%H:%M:%S.%f") + "-" + Utils.sToTimeFormat(TRIM_END, "%H:%M:%S.%f") + "]"
+OUTPUT_PATH = "../output/" + "[" + Utils.sToTimeFormat(TRIM_START, "%H:%M:%S.%f") + "-" + Utils.sToTimeFormat(TRIM_END, "%H:%M:%S.%f") + "]" + INPUT_FILE_NAME
 if not os.path.exists("../output/"):
     os.makedirs("../output/")
 # if os.path.exists(OUTPUT_PATH):
