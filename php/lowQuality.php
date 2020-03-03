@@ -9,6 +9,6 @@ if(isset($_GET['quality'])) {
 }
 
 $outputAddress = dirname($fileAddress) . "/" . pathinfo($fileAddress)["filename"] . $LOW_QUALITY_POSTFIX . "." . pathinfo($fileAddress)["extension"];
-$cmd = "ffmpeg -i $fileAddress -filter:v scale=\"trunc(oh*a/2)*2:$quality\" -c:a -crf 17 copy $outputAddress 2>&1";
+$cmd = "ffmpeg -i $fileAddress -filter:v scale=\"trunc(oh*a/2)*2:$quality\" -c:a copy $outputAddress 2>&1";
 echo $cmd;
 var_dump(shell_exec($cmd));
