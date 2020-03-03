@@ -1,9 +1,13 @@
 <?php
+$LOW_QUALITY_POSTFIX = "_LowQuality";
+
 $fileAddress = $_GET['fileAddress'];
 $trimStart = $_GET['trimStart'];
 $trimEnd = $_GET['trimEnd'];
 $copyrightChannel = $_GET['copyrightChannel'];
 $libx = $_GET['libx'];
+
+$fileAddress = str_replace($LOW_QUALITY_POSTFIX, "", $fileAddress);
 
 echo "python3 main.py $fileAddress $trimStart $trimEnd $copyrightChannel $libx <br>";
 
@@ -20,3 +24,5 @@ echo "<br>";
 var_dump(shell_exec($cmd));
 
 echo "<hr><a href='http://avir.sytes.net/ffmpeg/ffmpeg/output/'>Output Folder</a>";
+
+?>

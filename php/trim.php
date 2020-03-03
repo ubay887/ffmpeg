@@ -399,7 +399,9 @@ define("INPUT_DIR", "../input");
                 </div>
                 <div class="button-container">
                     <button type="button" class="button" onclick="trim()"><span>Trim</span></button>
+                    <button type="button" class="button" style="font-size: small; padding: 0.5rem;" onclick="lowQuality()"><span>Make Low Quality</span></button>
                 </div>
+
             </div>
         </div>
     </div>
@@ -417,6 +419,12 @@ define("INPUT_DIR", "../input");
         var trimURL = "doTrim.php?fileAddress=" + fileAddress + "&trimStart=" + trimStart + "&trimEnd=" + trimEnd + "&copyrightChannel=" + copyrightChannel + "&libx=" + libx;
         // window.location.href=trimURL;
         var win = window.open(trimURL, '_blank');
+        win.focus();
+    }
+    function lowQuality() {
+        var fileAddress = $('div.player').find('source').attr("src");
+        var lowURL = "lowQuality.php?fileAddress=" + fileAddress + "&quality=144";
+        var win = window.open(lowURL, '_blank');
         win.focus();
     }
 </script>
