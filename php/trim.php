@@ -414,7 +414,10 @@ define("INPUT_DIR", "../input");
         var trimEnd = $('div.time-slider').slider("values", 1);
         var copyrightChannel = $('input[name=radio]:checked').val();
         var libx = $('input[name=libx]:checked').val();
-        window.location.href="doTrim.php?fileAddress=" + fileAddress + "&trimStart=" + trimStart + "&trimEnd=" + trimEnd + "&copyrightChannel=" + copyrightChannel + "&libx=" + libx;
+        var trimURL = "doTrim.php?fileAddress=" + fileAddress + "&trimStart=" + trimStart + "&trimEnd=" + trimEnd + "&copyrightChannel=" + copyrightChannel + "&libx=" + libx;
+        // window.location.href=trimURL;
+        var win = window.open(trimURL, '_blank');
+        win.focus();
     }
 </script>
 <?php
