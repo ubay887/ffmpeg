@@ -363,7 +363,14 @@ define("INPUT_DIR", "../input");
                             <td>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="radio" checked="checked" value="MovieLife"/><i class="helper"></i>MovieLife
+                                        <input type="radio" name="radio" checked="checked" value="MovieLife"/><i class="helper"></i>MovieLifeBig
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="radio" value="MovieLifeSmall"/><i class="helper"></i>MovieLifeSmall
                                     </label>
                                 </div>
                             </td>

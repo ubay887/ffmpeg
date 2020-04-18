@@ -6,9 +6,8 @@ import sys
 
 from Utils import Utils
 
-PRE_FILE = "assets/MovieLife.mp4"
 INPUT_FOLDER = "../input/"
-OVERLAY_FILE = ffmpeg.input('assets/overlay.png')
+
 try:
     INPUT_FILE_NAME = os.listdir(INPUT_FOLDER)[0]
     INPUT_FILE_PATH = INPUT_FOLDER + INPUT_FILE_NAME
@@ -46,6 +45,12 @@ if len(sys.argv) == 6:
     if OVERLAY_CHANNEL == "NewOldMovies":
         PRE_FILE = "assets/NewOldMovies.mp4"
         OVERLAY_FILE = ffmpeg.input("assets/overlayNewOldMovies.png")
+    elif OVERLAY_CHANNEL == "MovieLifeSmall":
+        PRE_FILE = "assets/MovieLife.mp4"
+        OVERLAY_FILE = ffmpeg.input('assets/overlayMovieLifeSmall.png')
+    else:
+        PRE_FILE = "assets/MovieLife.mp4"
+        OVERLAY_FILE = ffmpeg.input('assets/overlayMovieLifeBig.png')
 
 print(INPUT_FILE_NAME)
 
@@ -76,7 +81,8 @@ inputStream = ffmpeg.filter(inputStream, "fade", type='in', start_time=0, durati
 
 stream = ffmpeg.concat(preFileStream, a1, inputStream, a2, v=1, a=1)
 
-OUTPUT_PATH = "../output/" + "[" + Utils.sToTimeFormat(TRIM_START, "%H:%M:%S.%f") + "-" + Utils.sToTimeFormat(TRIM_END, "%H:%M:%S.%f") + "]" + INPUT_FILE_NAME
+OUTPUT_PATH = "../output/" + "[" + Utils.sToTimeFormat(TRIM_START, "%H:%M:%S.%f") + "-" + Utils.sToTimeFormat(TRIM_END,
+                                                                                                              "%H:%M:%S.%f") + "]" + INPUT_FILE_NAME
 if not os.path.exists("../output/"):
     os.makedirs("../output/")
 # if os.path.exists(OUTPUT_PATH):
