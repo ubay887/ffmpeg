@@ -406,6 +406,7 @@ define("INPUT_DIR", "../input");
                 </div>
                 <div class="button-container">
                     <button type="button" class="button" onclick="trim()"><span>Trim</span></button>
+                    <button type="button" class="button" style="font-size: small; padding: 0.5rem;" onclick="getTrimCode()"><span>Get Trim Code</span></button>
                     <button type="button" class="button" style="font-size: small; padding: 0.5rem;" onclick="lowQuality()"><span>Make Low Quality</span></button>
                 </div>
 
@@ -424,6 +425,17 @@ define("INPUT_DIR", "../input");
         var copyrightChannel = $('input[name=radio]:checked').val();
         var libx = $('input[name=libx]:checked').val();
         var trimURL = "doTrim.php?fileAddress=" + fileAddress + "&trimStart=" + trimStart + "&trimEnd=" + trimEnd + "&copyrightChannel=" + copyrightChannel + "&libx=" + libx;
+        // window.location.href=trimURL;
+        var win = window.open(trimURL, '_blank');
+        win.focus();
+    }
+    function getTrimCode() {
+        var fileAddress = $('div.player').find('source').attr("src");
+        var trimStart = $('div.time-slider').slider("values", 0);
+        var trimEnd = $('div.time-slider').slider("values", 1);
+        var copyrightChannel = $('input[name=radio]:checked').val();
+        var libx = $('input[name=libx]:checked').val();
+        var trimURL = "doTrim.php?fileAddress=" + fileAddress + "&trimStart=" + trimStart + "&trimEnd=" + trimEnd + "&copyrightChannel=" + copyrightChannel + "&libx=" + libx + "&code=1";
         // window.location.href=trimURL;
         var win = window.open(trimURL, '_blank');
         win.focus();
